@@ -90,6 +90,24 @@ class _MyHomePageState extends State<MyHomePage> {
     Item(id: 10, name: "Tooly", number: 1),
   ];
 
+  // List<Ugh> ungroupedList = [
+  //   Ugh(key: 'A', value: 'apple'),
+  //   Ugh(key: 'B', value: 'banana'),
+  //   Ugh(key: 'C', value: 'cherry'),
+  //   Ugh(key: 'D', value: 'date'),
+  //   Ugh(key: 'E', value: 'elderberry'),
+  //   Ugh(key: 'F', value: 'fig'),
+  //   Ugh(key: 'G', value: 'grape'),
+  //   Ugh(key: 'A', value: 'avocado'),
+  //   Ugh(key: 'B', value: 'blueberry'),
+  //   Ugh(key: 'C', value: 'coconut'),
+  //   Ugh(key: 'D', value: 'dragonfruit'),
+  //   Ugh(key: 'E', value: 'elderflower'),
+  //   Ugh(key: 'F', value: 'fuji apple'),
+  //   Ugh(key: 'G', value: 'guava'),
+  //   Ugh(key: 'H', value: 'honeydew'),
+  // ];
+
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -109,38 +127,61 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text('${items.length}'),
       ),
       body: RealGroupedList(
-        itemCount: items.length,
+        // itemCount: items.length,
         items: items,
-        itemBuilder: (context, index) {
-          return SizedBox(
-            height: 100,
-            child: Card(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    Text(items[index].number.toString()),
-                    const SizedBox(width: 10),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(items[index].id.toString()),
-                        Text(items[index].name),
-                      ],
-                    )
-                  ],
-                ),
+        groupBy: (dynamic item) => item.number,
+        itemWidget: (dynamic item) => SizedBox(
+          height: 100,
+          child: Card(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  // Text(item.number.toString()),
+                  const SizedBox(width: 10),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      // Text(item.id.toString()),
+                      Text(item.name),
+                    ],
+                  )
+                ],
               ),
             ),
-          );
-        },
+          ),
+        ),
+        // itemBuilder: (context, index) {
+        //   return SizedBox(
+        //     height: 100,
+        //     child: Card(
+        //       child: Padding(
+        //         padding: const EdgeInsets.all(8.0),
+        //         child: Row(
+        //           children: [
+        //             Text(items[index].number.toString()),
+        //             const SizedBox(width: 10),
+        //             Column(
+        //               crossAxisAlignment: CrossAxisAlignment.center,
+        //               mainAxisAlignment: MainAxisAlignment.center,
+        //               children: [
+        //                 Text(items[index].id.toString()),
+        //                 Text(items[index].name),
+        //               ],
+        //             )
+        //           ],
+        //         ),
+        //       ),
+        //     ),
+        //   );
+        // },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: _incrementCounter,
+      //   tooltip: 'Increment',
+      //   child: const Icon(Icons.add),
+      // ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
