@@ -37,6 +37,14 @@ class MyApp extends StatelessWidget {
   }
 }
 
+class Item {
+  int id;
+  String name;
+  int number;
+
+  Item({required this.id, required this.name, required this.number});
+}
+
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
 
@@ -70,14 +78,16 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   var items = [
-    'le',
-    'le',
-    'le',
-    'le',
-    'le',
-    'le',
-    'le',
-    'le',
+    Item(id: 1, name: "Chalwe", number: 4),
+    Item(id: 2, name: "Charles", number: 2),
+    Item(id: 3, name: "Tommy", number: 6),
+    Item(id: 4, name: "Darlh", number: 2),
+    Item(id: 5, name: "Kenny", number: 4),
+    Item(id: 6, name: "Mike", number: 1),
+    Item(id: 7, name: "Riot", number: 3),
+    Item(id: 8, name: "Time", number: 7),
+    Item(id: 9, name: "Please", number: 1),
+    Item(id: 10, name: "Tooly", number: 1),
   ];
 
   @override
@@ -96,9 +106,36 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        title: Text('${items.length}'),
       ),
-      body: RealGroupedList(itemCount: 8, elements: items),
+      body: RealGroupedList(
+        itemCount: items.length,
+        items: items,
+        itemBuilder: (context, index) {
+          return SizedBox(
+            height: 100,
+            child: Card(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    Text(items[index].number.toString()),
+                    const SizedBox(width: 10),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(items[index].id.toString()),
+                        Text(items[index].name),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
