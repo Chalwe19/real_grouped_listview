@@ -4,16 +4,20 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+import 'src/group_list_order.dart';
+
 class RealGroupedList<T, E> extends StatefulWidget {
   final List<T> items;
   final E Function(T element) groupBy;
   final Widget Function(T element) itemWidget;
+  final GroupListOrder order;
 
   const RealGroupedList({
     super.key,
     required this.items,
     required this.groupBy,
     required this.itemWidget,
+    this.order = GroupListOrder.asc,
   });
 
   @override
@@ -27,10 +31,10 @@ class _RealGroupedListState<T, E> extends State<RealGroupedList<T, E>> {
   @override
   void initState() {
     super.initState();
-    _sortedMap = groupObjects();
+    _sortedMap = _groupObjects();
   }
 
-  groupObjects() {
+  _groupObjects() {
     List<T> ungroupedList = [...widget.items];
     Map<E, List<T>> groupedObjects = {};
 
@@ -42,9 +46,11 @@ class _RealGroupedListState<T, E> extends State<RealGroupedList<T, E>> {
         groupedObjects[groupedKey] = [item];
       }
     }
-
-    groupedObjects.entries.toSet().toList();
     return groupedObjects;
+  }
+
+  _sortList(Map<E, List<T>> unsordtedMap) {
+    // var orderList = SplayTreeMap < ((a, b) => b.compareTo(a),);
   }
 
   Widget _buildList(context, index) {
@@ -73,7 +79,6 @@ class _RealGroupedListState<T, E> extends State<RealGroupedList<T, E>> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      // shrinkWrap: true,
       itemCount: _sortedMap.keys.length,
       itemBuilder: _buildList,
     );
