@@ -10,6 +10,9 @@ For general information about developing packages, see the Dart guide for
 and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/developing-packages).
 -->
+[![Build Status](https://travis-ci.org/chalwe19/real_grouped_listview.svg?branch=master)](https://travis-ci.org/chalwe19/real_grouped_listview)
+[![Coverage Status](https://coveralls.io/repos/chalwe19/real_grouped_listview/badge.svg)](https://coveralls.io/r/chalwe19/faker)
+[![Faker on pub](https://img.shields.io/pub/v/real_grouped_listview.svg)](https://pub.dartlang.org/packages/real_grouped_listview)
 
 TODO: Put a short description of the package here that helps potential users
 know whether this package might be useful for them.
