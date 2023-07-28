@@ -130,6 +130,14 @@ class _MyHomePageState extends State<MyHomePage> {
         // itemCount: items.length,
         items: items,
         groupBy: (dynamic item) => item.number,
+        order: GroupListOrder.asc,
+        headerBuilder: (dynamic header) => Text(
+          header.toString(),
+          style: const TextStyle(
+            fontSize: 19,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         itemWidget: (dynamic item) => SizedBox(
           height: 100,
           child: Card(
@@ -137,7 +145,6 @@ class _MyHomePageState extends State<MyHomePage> {
               padding: const EdgeInsets.all(8.0),
               child: Row(
                 children: [
-                  // Text(item.number.toString()),
                   const SizedBox(width: 10),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,

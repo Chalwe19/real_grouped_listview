@@ -1,15 +1,13 @@
-import 'dart:collection';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import 'src/group_list_order.dart';
+enum GroupListOrder { asc, dsc, none }
 
 class RealGroupedList<T, E> extends StatefulWidget {
   final List<T> items;
   final E Function(T element) groupBy;
   final Widget Function(T element) itemWidget;
+  final Widget Function(E element) headerBuilder;
   final GroupListOrder order;
 
   const RealGroupedList({
@@ -17,6 +15,7 @@ class RealGroupedList<T, E> extends StatefulWidget {
     required this.items,
     required this.groupBy,
     required this.itemWidget,
+    required this.headerBuilder,
     this.order = GroupListOrder.asc,
   });
 
@@ -46,22 +45,32 @@ class _RealGroupedListState<T, E> extends State<RealGroupedList<T, E>> {
         groupedObjects[groupedKey] = [item];
       }
     }
-    return groupedObjects;
+    var sortedMap = _sortList(groupedObjects);
+    return sortedMap;
   }
 
   _sortList(Map<E, List<T>> unsordtedMap) {
-    // var orderList = SplayTreeMap < ((a, b) => b.compareTo(a),);
+    var entries = unsordtedMap.keys;
+
+    var sortedEntries = entries.toList()..sort();
+
+    late Map<E, List<T>> sortedMap;
+
+    if (widget.order == GroupListOrder.asc) {
+      sortedMap = {for (var key in sortedEntries) key: unsordtedMap[key]!};
+    } else {
+      var reversedSortedEntries = sortedEntries.reversed;
+
+      sortedMap = {
+        for (var key in reversedSortedEntries) key: unsordtedMap[key]!
+      };
+    }
+    return sortedMap;
   }
 
   Widget _buildList(context, index) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Text(
-        _sortedMap.entries.elementAt(index).key.toString(),
-        style: const TextStyle(
-          fontSize: 19,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
+      widget.headerBuilder(_sortedMap.entries.elementAt(index).key),
       ListView.builder(
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
